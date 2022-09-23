@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from torch.nn import functional as F
+from torch.nn import functional as func
 from torch import optim
 
 import torchvision
@@ -46,9 +46,9 @@ class Net(nn.Module):
     def forward(self, inp):
         # x: [b, 1, 28, 28]
         # h1 = relu(xw1 + b1)
-        inp = F.relu(self.fc1(inp))
+        inp = func.relu(self.fc1(inp))
         # h2 = relu(h1w2 + b2)
-        inp = F.relu(self.fc2(inp))
+        inp = func.relu(self.fc2(inp))
         # h3 = h2w3 + b3
         inp = self.fc3(inp)
         return inp
@@ -67,7 +67,7 @@ for epoch in range(3):
         # [b, 10]
         y_onehot = one_hot(y)
         # loss = mes(out, y_onehot)
-        loss = F.mse_loss(out, y_onehot)
+        loss = func.mse_loss(out, y_onehot)
 
         optimizer.zero_grad()
         loss.backward()
@@ -93,4 +93,3 @@ for x, y in test_loader:
 total_num = len(test_loader.dataset)
 acc = total_correct / total_num
 print('test acc: ', acc)
-# 34
