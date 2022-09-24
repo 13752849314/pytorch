@@ -37,3 +37,4 @@ class Lenet5(nn.Module):
 
         # pred = F.softmax(logits, dim=1)
         # loss = self.criteon(logits)
+        return logits
