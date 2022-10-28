@@ -2,4 +2,4 @@
 
 visdom python -m visdom.server
 
-p 88
+p 93
