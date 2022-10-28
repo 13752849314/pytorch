@@ -9,8 +9,8 @@ input_size = 1
 output_size = 1
 hidden_size = 12
 batch_size = 1
-num_layers = 2
-max_iter = 6000
+num_layers = 1
+max_iter = 1000
 num_time_steps = 50
 
 model = SimpleRNN(input_size, hidden_size, output_size, num_layers=num_layers)
@@ -18,11 +18,11 @@ print(model)
 criteon = nn.MSELoss()
 optimizer = optim.Adam(model.parameters())
 
-h_prev = torch.zeros(num_layers, input_size, hidden_size)
+h_prev = torch.zeros(num_layers * batch_size, input_size, hidden_size)
 
 for epoch in range(max_iter):
     model.train()
-    start = np.random.randint(3, size=1)[0]
+    start = np.random.randint(10, size=1)[0]
     time_steps = np.linspace(start, start + 10, num_time_steps)
     data = np.sin(time_steps)
     data = data.reshape(num_time_steps, 1)
@@ -42,7 +42,7 @@ for epoch in range(max_iter):
 
 model.eval()
 predictions = []
-pred_start = 1
+pred_start = 0
 inp = torch.tensor([[pred_start]]).float()
 p_num = num_time_steps
 for _ in range(p_num):
